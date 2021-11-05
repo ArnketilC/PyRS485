@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
+
 import serial
 import serial.rs485
 import os
 import time
 
 PORT = 'COM3'
+BAUDRATE = 9600
 
-ser = serial.Serial(
+ser = serial.rs485.RS485(
     port=PORT,
-    baudrate=9600,
+    baudrate=BAUDRATE,
     timeout=1,
-    stopbits=serial.STOPBITS_ONE,
-    parity=serial.PARITY_EVEN,
+    # stopbits=serial.STOPBITS_ONE,
+    # parity=serial.PARITY_EVEN,
     bytesize=serial.EIGHTBITS)
 print("Is communication with {} open ? : {}".format(ser.name, ser.is_open))
 
@@ -23,12 +25,15 @@ ser.rs485_mode = serial.rs485.RS485Settings(
     delay_before_rx=None)
 
 print("Asking for data on node 1")
-ser.write(b"N1TA*")
+ser.write("N1TA*".encode('ascii'))
 print("Reading :")
 time.sleep(0.04)
-s = ser.read_until()
-#s = ser.read(size=16)
-#s = ser.readlines()
-print(s)
+
+b = 0
+while b < 50:
+    st = ser.read()
+    s = st.decode('ascii')
+    print(s)
+    b += 1
 
 os.system("pause")
