@@ -27,11 +27,11 @@ def init_serial(PORT=PORT, BAUDRATE=BAUDRATE):
         delay_before_rx=None)
     return ser
 
-def read_from_serial(ser, n=1):
+def read_from_serial(ser, address, n=1):
     print("Asking for data on node 1")
     b = 0
     while b < n:
-        ser.write("N1TA*".encode('ascii'))
+        ser.write(f"N{address}TA*".encode('ascii'))
         print("Reading :")
         time.sleep(0.04)
         st = ser.readline()
