@@ -7,18 +7,22 @@ from pax_serial_RS485 import init_serial, read_from_serial
 LIST_BAUDRATE = [300, 600, 1200, 2400, 4800, 9600, 19200]
 LIST_ADDRESS = [i for i in range(100)]
 
-def serial_ports():    
+def serial_ports() -> list:
+    """Get serial port list for further uses""" 
     return serial.tools.list_ports.comports()
 
-def print_cb(event=None): 
+def print_cb(event=None) -> None: 
+    """Print cb value"""
     print("event.widget:", event.widget.get())
 
-def initiation_serial(n=10):
+def initiation_serial(n=10) -> None:
+    """Initialize serial communication and read from it"""
     print(cb_1.get())
     ser = init_serial(cb_1.get()[:4], cb_2.get())
     read_from_serial(ser, cb_3.get(), n=n)
 
-def updateComPortList():    
+def updateComPortList() -> None:
+    """Update combo box """
     cb_1['values']=serial_ports()[:4]
 
 if __name__ == '__main__':
@@ -50,7 +54,4 @@ if __name__ == '__main__':
         command=lambda:initiation_serial()
     )
     button.pack()
-
-
-
     mainwindow.mainloop()

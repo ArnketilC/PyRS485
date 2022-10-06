@@ -8,8 +8,8 @@ import time
 PORT = 'COM8'
 BAUDRATE = 9600
 
-def init_serial(PORT=PORT, BAUDRATE=BAUDRATE):
-
+def init_serial(PORT=PORT, BAUDRATE=BAUDRATE) -> "serial":
+    """Setup and open communication"""
     ser = serial.rs485.RS485(
         port=PORT,
         baudrate=BAUDRATE,
@@ -27,7 +27,8 @@ def init_serial(PORT=PORT, BAUDRATE=BAUDRATE):
         delay_before_rx=None)
     return ser
 
-def read_from_serial(ser, address, n=1):
+def read_from_serial(ser, address, n=1) -> None:
+    """Read values from rs485 communication"""
     print("Asking for data on node 1")
     b = 0
     while b < n:

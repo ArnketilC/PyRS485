@@ -15,13 +15,13 @@ label = tk.Label(text="A Label")
 label.pack()
 
 class reader():
-    def __init__(self, port=PORT, baudrate=BAUDRATE):
+    def __init__(self, port=PORT, baudrate=BAUDRATE) -> None:
         self.port = port
         self.baudrate = baudrate
         self.ser = ""
         self.initSerial(self.port, self.baudrate)
     
-    def initSerial(self, port, baudrate):
+    def initSerial(self, port, baudrate) -> None:
         self.ser = serial.Serial(
             port=port,
             baudrate=baudrate,
@@ -34,7 +34,7 @@ class reader():
         b = 0
         message = "!001:SYS?\r".encode('ascii')
     
-    def readValue(self):
+    def readValue(self) -> bool:
         t = gmtime()
         l = []
         b = 0
@@ -49,7 +49,7 @@ class reader():
             b += 1
         return l
     
-    def printValue(self, l):
+    def printValue(self, l) -> None:
         nb_ligne = 0
         start = l[0][1]
         for ligne in l:
@@ -57,7 +57,7 @@ class reader():
             nb_ligne += 1
         print(str(1000*nb_ligne/(l[nb_ligne-1][1]-start)) + " hz")
 
-def main():
+def main() -> None:
     r = reader()
     r.printValue(r.readValue())
 
