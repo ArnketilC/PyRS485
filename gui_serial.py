@@ -2,7 +2,7 @@ from http import server
 import tkinter as tk
 import tkinter.ttk as ttk
 import serial.tools.list_ports
-from pax_serial_RS485 import init_serial, read_from_serial
+from pax_serial_RS485 import init_serial, read_10_from_serial
 
 LIST_BAUDRATE = [300, 600, 1200, 2400, 4800, 9600, 19200]
 LIST_ADDRESS = [i for i in range(100)]
@@ -18,8 +18,8 @@ def print_cb(event=None) -> None:
 def initiation_serial(n=10) -> None:
     """Initialize serial communication and read from it"""
     print(cb_1.get())
-    ser = init_serial(cb_1.get()[:4], cb_2.get())
-    read_from_serial(ser, cb_3.get(), n=n)
+    ser = init_serial(cb_1.get()[:4], cb_2.get(), debug=True)
+    read_10_from_serial(ser, cb_3.get(), n=n)
 
 def updateComPortList() -> None:
     """Update combo box """
@@ -31,6 +31,7 @@ if __name__ == '__main__':
     mainwindow.title("RS485 tester for PAXx")
     mainwindow.iconbitmap("assets/img/usb.ico")
     mainwindow.resizable(width=False, height=False)
+    mainwindow.geometry("300x200")
     tk.Label(mainwindow, text="Port com").pack()
     cb_1 = ttk.Combobox(mainwindow, values=serial_ports(), postcommand = updateComPortList)
     cb_1.set("Choose com port")

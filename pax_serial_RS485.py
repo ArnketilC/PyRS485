@@ -8,16 +8,17 @@ import time
 PORT = 'COM8'
 BAUDRATE = 9600
 
-def init_serial(PORT=PORT, BAUDRATE=BAUDRATE) -> "serial":
+def init_serial(PORT=PORT, BAUDRATE=BAUDRATE, debug= False) -> "serial":
     """Setup and open communication"""
     ser = serial.rs485.RS485(
         port=PORT,
         baudrate=BAUDRATE,
-        timeout=1,
+        timeout=0.1,
         # stopbits=serial.STOPBITS_ONE,
         # parity=serial.PARITY_EVEN,
         bytesize=serial.EIGHTBITS)
-    print("Is communication with {} open ? : {}".format(ser.name, ser.is_open))
+    if debug:
+        print("Is communication with {} open ? : {}".format(ser.name, ser.is_open))
 
     ser.rs485_mode = serial.rs485.RS485Settings(
         rts_level_for_tx=True,
@@ -27,7 +28,7 @@ def init_serial(PORT=PORT, BAUDRATE=BAUDRATE) -> "serial":
         delay_before_rx=None)
     return ser
 
-def read_from_serial(ser, address, n=1) -> None:
+def read_10_from_serial(ser, address, n=1) -> None:
     """Read values from rs485 communication"""
     print("Asking for data on node 1")
     b = 0
@@ -40,6 +41,18 @@ def read_from_serial(ser, address, n=1) -> None:
         print(s)
         b += 1
         time.sleep(0.5)
+
+def read_from_serial(ser, address) -> None:
+    """Read values from rs485 communication"""
+    # print("Asking for data on node 1")
+    ser.write(f"N{address}TA*".encode('ascii'))
+    # print("Reading :")
+    # time.sleep(0.04)
+    st = ser.readline()
+    s = st.decode('ascii')
+    # time.sleep(0.04)
+    return s
+
 
 
 
