@@ -42,17 +42,26 @@ def read_10_from_serial(ser, address, n=1) -> None:
         b += 1
         time.sleep(0.5)
 
-def read_from_serial(ser, address) -> None:
+def ask_read_from_serial(ser, address) -> None:
     """Read values from rs485 communication"""
     # print("Asking for data on node 1")
     ser.write(f"N{address}TA*".encode('ascii'))
     # print("Reading :")
+    time.sleep(0.04)
+    st = ser.readline()
+    s = st.decode('ascii')
+    time.sleep(0.04)
+    return s
+
+def read_from_serial(ser) -> None:
+    """Read values from rs485 communication"""
+    # print("Reading :")
     # time.sleep(0.04)
     st = ser.readline()
+    print(len(st))
     s = st.decode('ascii')
     # time.sleep(0.04)
     return s
-
 
 
 
