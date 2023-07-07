@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from opcode import stack_effect
 import serial
 import serial.rs485
 import os
@@ -58,7 +59,9 @@ def read_from_serial(ser) -> None:
     # print("Reading :")
     # time.sleep(0.04)
     st = ser.readline()
-    print(len(st))
+    print(f"Bytes:{st}")
+    print(f"Bytes HEX:{st.hex()}")
+    print(f"Length: {len(st)}")
     s = st.decode('ascii')
     # time.sleep(0.04)
     return s
