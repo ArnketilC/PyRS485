@@ -14,7 +14,7 @@ def init_serial(PORT=PORT, BAUDRATE=BAUDRATE, debug= False) -> "serial":
         port=PORT,
         baudrate=BAUDRATE,
         timeout=0.1,
-        # stopbits=serial.STOPBITS_ONE,
+        stopbits=serial.STOPBITS_ONE,
         # parity=serial.PARITY_EVEN,
         bytesize=serial.EIGHTBITS)
     if debug:
@@ -35,12 +35,12 @@ def read_10_from_serial(ser, address, n=1) -> None:
     while b < n:
         ser.write(f"N{address}TA*".encode('ascii'))
         print("Reading :")
-        time.sleep(0.04)
+        # time.sleep(0.04)
         st = ser.readline()
         s = st.decode('ascii')
         print(s)
         b += 1
-        time.sleep(0.5)
+        # time.sleep(0.5)
 
 def ask_read_from_serial(ser, address) -> None:
     """Read values from rs485 communication"""
@@ -53,16 +53,19 @@ def ask_read_from_serial(ser, address) -> None:
     time.sleep(0.04)
     return s
 
-def read_from_serial(ser) -> None:
+def read_from_serial(ser,address) -> None:
     """Read values from rs485 communication"""
     # print("Reading :")
+
+    # ser.write(f"4843".encode('ascii'))
     # time.sleep(0.04)
-    st = ser.readline()
-    # st = ser.read()
+    st = ser.readline()    
     print(f"Bytes:{st}")
     print(f"Bytes HEX:{st.hex()}")
     print(f"Length: {len(st)}")
     s = st.decode('ascii')
+    # st = ser.read()
+
     # time.sleep(0.04)
     return s
 
@@ -75,7 +78,7 @@ if __name__ == '__main__':
     a = 10
     i = 0
     while(i<a):
-        read_from_serial(ser)
+        print(read_from_serial(ser,1))
         i +=1
     # read_10_from_serial(ser, 1, 10)
     os.system("pause")

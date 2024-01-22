@@ -14,7 +14,7 @@ def init_serial(PORT=PORT, BAUDRATE=BAUDRATE, debug= False) -> "serial":
         port=PORT,
         baudrate=BAUDRATE,
         timeout=0.1,
-        # stopbits=serial.STOPBITS_ONE,
+        stopbits=serial.STOPBITS_ONE,
         # parity=serial.PARITY_EVEN,
         bytesize=serial.EIGHTBITS)
     if debug:

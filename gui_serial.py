@@ -1,4 +1,3 @@
-from http import server
 import tkinter as tk
 import tkinter.ttk as ttk
 import serial.tools.list_ports

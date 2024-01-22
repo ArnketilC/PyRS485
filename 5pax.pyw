@@ -2,6 +2,7 @@ from http import server
 from re import Match
 import threading
 import tkinter as tk
+import traceback
 import tkinter.ttk as ttk
 import serial.tools.list_ports
 from pax_serial_RS485 import init_serial, ask_read_from_serial
@@ -52,6 +53,8 @@ def initiation_serial() -> None:
             try :
                 aswr = str(float(aswr))
             except:
+                print(f"__DEBUG__ :\nAnswer :{aswr}")
+                print(traceback.format_exc())
                 aswr="N/A"
             match i:
                 case 1:
@@ -85,7 +88,7 @@ if __name__ == '__main__':
     """Main loop with tkinter GUI stuff"""
   
     mw.title("RS485 tester for PAXx")
-    mw.iconbitmap("assets/img/usb.ico")
+    #mw.iconbitmap("assets/img/usb.ico")
     mw.resizable(width=False, height=False)
     mw.geometry("250x450")
 
